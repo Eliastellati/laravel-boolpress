@@ -20,6 +20,7 @@ class PostsTableSeeder extends Seeder
             $newPost->content = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nihil numquam, praesentium, quos possimus dolorum, totam optio dolores eveniet cupiditate incidunt laudantium? Numquam placeat fugiat magni aspernatur non illo pariatur hic amet optio aliquam doloribus quam, molestias adipisci beatae libero sequi possimus quis praesentium? Ea molestias nisi, architecto sapiente doloremque facilis repellendus optio magni enim, voluptatibus, totam veritatis sunt assumenda suscipit mollitia expedita ab necessitatibus. Eius repellat sint, dignissimos minus hic voluptatem molestias perferendis delectus nam fugit tempora consequuntur alias ipsum, earum omnis deleniti beatae, sapiente quibusdam. Temporibus et, at autem possimus rerum tenetur deleniti sapiente consectetur velit, itaque maiores delectus!";
             $newPost->slug = Str::slug($newPost->title,'-');
             $newPost->author = 'Elia';
+            $newPost->category= 'random';
 
             $newPost->save();
         }
