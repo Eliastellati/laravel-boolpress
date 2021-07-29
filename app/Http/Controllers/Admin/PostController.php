@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Post;
 
 class PostController extends Controller
@@ -26,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -37,7 +38,36 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $request->validate([
+            'title'=> 'required|max:255',
+            'content'=>'required' 
+        ]);
+
+        $newPost = new Post();
+
+        $slug= Str::slug($data['title'], '-');
+        $data['slug']= $slug;
+        $existingPost = Post::where('slug', $slug)->first();
+
+        $slugBase= $slug;
+        $counter = 1;
+
+        while($existingPost) {
+            $slug = $slugBase . '-' . $counter;
+
+            $existingPost = Post::where('slug', $slug)->first();
+
+            $counter++;
+
+        };
+
+        $newPost->fill($data);
+
+        $newPost->save();
+
+        return redirect()->route('admin.posts.show', $newPost->id);
     }
 
     /**
@@ -58,9 +88,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -70,9 +100,38 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+       $data = $request->all();
+
+       $request->validate([
+        'title'=> 'required|max:255',
+        'content'=>'required' 
+       ]);
+
+       if($post->title != $data['title']) {
+        $slug= Str::slug($data['title'], '-');
+        $data['slug']= $slug;
+        $existingPost = Post::where('slug', $slug)->first();
+
+        $slugBase= $slug;
+        $counter = 1;
+
+        while($existingPost) {
+            $slug = $slugBase . '-' . $counter;
+
+            $existingPost = Post::where('slug', $slug)->first();
+
+            $counter++;
+
+        };
+
+        $data['slug']= $slug;
+       };
+
+      $post->update($data);
+
+      return redirect()->route('admin.posts.show', $post->id);
     }
 
     /**
@@ -81,8 +140,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()
+            ->route('admin.posts.index')
+            ->with('delete', 'Il post "' . addslashes($post->title) . '" è stato eliminato con successo!');
     }
 }
