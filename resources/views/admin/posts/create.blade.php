@@ -20,6 +20,15 @@
                    <small>{{$message}}</small>
                 @enderror
             </div>
+            <div class="form-group">
+                <label for="category_id">Categoria</label>
+                <select  class="form-control" name="category_id" id="category_id">
+                    <option value="">-- Seleziona una Categoria</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>    
             <button type="submit" class="btn btn-primary">Submit</button>
             <a  class="btn btn-secondary ml-2" href="{{ route('admin.posts.index') }}">Torna all'elenco</a>
         </form>
