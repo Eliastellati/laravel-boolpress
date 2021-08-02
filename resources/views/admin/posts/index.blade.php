@@ -20,6 +20,11 @@
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->slug }}</td>
                     <td>
+                        @if ($item->category)
+                            {{ $item->category->name }}
+                        @endif
+                    </td>
+                    <td>
                         <a class="btn btn-success" href="{{ route('admin.posts.show',$item->id) }}">SHOW</a>
                     </td>
                     <td>

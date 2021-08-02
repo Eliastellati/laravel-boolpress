@@ -2,7 +2,14 @@
 
 @section('content')
     <div class="container">
-        <h1>{{$post->title}}</h1>
+        <h1>
+            {{$post->title}} 
+            @if ($post->category)
+            <a href="{{ route('admin.categories.show') }}" class="badge badge-info" >{{$post->category->name}}</a>
+            @else
+            <span class="badge badge-secondary" >Nessuna categoria Associata</span>
+            @endif   
+        </h1> 
         <small>{{$post->slug}}</small>
         <div>
             <a class="btn btn-warning" href="{{ route('admin.posts.edit', $post->id) }}">Modifica</a>

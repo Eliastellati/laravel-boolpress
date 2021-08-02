@@ -28,7 +28,16 @@
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
-            </div>    
+            </div>  
+            <div class="form-group">
+                <h5>Tags</h5>
+                @foreach ($tags as $tag)
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="tags[]" type="checkbox" id="tag-{{$tag->id}}" value="{{$tag->id}}">
+                    <label class="form-check-label" for="tag-{{$tag->id}}">{{$tag->name}}</label>
+                  </div>
+                @endforeach
+            </div>  
             <button type="submit" class="btn btn-primary">Submit</button>
             <a  class="btn btn-secondary ml-2" href="{{ route('admin.posts.index') }}">Torna all'elenco</a>
         </form>
