@@ -48,7 +48,8 @@ class PostController extends Controller
         $request->validate([
             'title'=> 'required|max:255',
             'content'=>'required',
-            'category_id'=>'nullable|exists:categories,id' 
+            'category_id'=>'nullable|exists:categories,id',
+            'tags'=>'exists:tags,id' 
         ]);
 
         $newPost = new Post();
@@ -112,7 +113,9 @@ class PostController extends Controller
 
        $request->validate([
         'title'=> 'required|max:255',
-        'content'=>'required' 
+        'content'=>'required',
+        'category_id'=>'nullable|exists:categories,id',
+        'tags'=>'exists:tags,id' 
        ]);
 
        if($post->title != $data['title']) {
@@ -148,6 +151,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $post->tags()->detach();
+
         $post->delete();
         return redirect()
             ->route('admin.posts.index')
