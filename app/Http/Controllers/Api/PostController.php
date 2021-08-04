@@ -9,12 +9,9 @@ use App\Post;
 class PostController extends Controller
 {
     public function index() {
-        $posts = Post::all();
-        $result = [
-            'success' => true,
-            'posts' => $posts
-        ];
-        return response()->json($result);
+        $posts = Post::paginate(6);
+        
+        return response()->json($posts);
     }
 
     public function show($slug) {

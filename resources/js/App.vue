@@ -4,7 +4,12 @@
  <main>
      <h1>Il Mio Blog</h1>
       <div class="row">
-          <div 
+          <Card  
+           v-for="post in posts"
+           :key="post.id"
+           :item="post"
+          />
+          <!-- <div 
             class="col-4 my-3 d-flex"
             v-for="post in posts"
             :key="post.id"
@@ -16,7 +21,29 @@
               </div>
               <a href="#" class="card-link">Leggi</a>
           </div>
-          </div>
+          </div> -->
+      </div>
+      <div class="text-center">
+          <button 
+           v-show="current_page > 1"
+           class="btn btn-info"
+           @click="getPosts(current_page -1)"
+           >Prev</button>
+
+          <button 
+          v-for="n in last_page"
+          :key="n"
+          @click="getPosts(n)"
+          class="btn mr-2"
+          :class="(n == current_page) ? 'btn-primary' : 'btn-info' " >
+          {{n}}
+          </button>
+
+          <button 
+           v-show="current_page < last_page"
+           class="btn btn-info"
+           @click="getPosts(current_page+1)"
+           >Next</button>
       </div>
  </main>
  <Footer />
@@ -26,16 +53,20 @@
 <script>
 // import WorkInProgress from './components/WorkInProgress';
 import Header from './components/Header';
+import Card from './components/Card';
 import Footer from './components/Footer';
 export default {
 name: 'App',
 data: function() {
     return {
-        posts: []
+        posts: [],
+        current_page: 1,
+        last_page: 1
     }
 },
 components: {
     Header,
+    Card,
     Footer
 },
 methods: {
@@ -45,15 +76,22 @@ methods: {
         }else {
             return string
         }
-    }
-},
-created: function() {
+    },
+    getPosts: function(page =1) {
     axios
-      .get('http://127.0.0.1:8000/api/posts')
+      .get(`http://127.0.0.1:8000/api/posts?page=${page}`)
       .then(
           res=>{
               console.log(res.data);
-              this.posts=res.data.posts;
+              this.posts=res.data.data;
+              this.current_page = res.data.current_page;
+              this.last_page = res.data.last_page;
+
+              this.posts.forEach(
+                  element=> {
+                      element.excerpt=this.truncateText(element.content, 150);
+                  }
+              );
           }
       )
       .catch(
@@ -61,6 +99,10 @@ created: function() {
               console.log(err);
           }
       )
+    }
+},
+created: function() {
+    this.getPosts;
 }
 
 }
