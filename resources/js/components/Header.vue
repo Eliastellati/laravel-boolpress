@@ -38,7 +38,7 @@ header {
             text-decoration: none;
 
             &.active,
-            &.hover {
+            &:hover {
                 background: teal;
                 color: white;
             }
