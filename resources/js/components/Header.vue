@@ -3,13 +3,13 @@
       <div class="container">
           <ul>
               <li>
-                  <a class="active" href="#">Home</a>
+                  <router-link to="/">Home</router-link>
               </li>
               <li>
-                  <a href="#">Blog</a>
+                  <router-link to="/blog">Blog</router-link>
               </li>
               <li>
-                  <a href="#">Chi Siamo</a>
+                  <router-link to="/about">Chi Siamo</router-link>
               </li>
           </ul>
       </div>

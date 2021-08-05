@@ -3290,30 +3290,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("header", [
-      _c("div", { staticClass: "container" }, [
-        _c("ul", [
-          _c("li", [
-            _c("a", { staticClass: "active", attrs: { href: "#" } }, [
-              _vm._v("Home")
+  return _c("header", [
+    _c("div", { staticClass: "container" }, [
+      _c("ul", [
+        _c(
+          "li",
+          [_c("router-link", { attrs: { to: "/" } }, [_vm._v("Home")])],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          [_c("router-link", { attrs: { to: "/blog" } }, [_vm._v("Blog")])],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          [
+            _c("router-link", { attrs: { to: "/about" } }, [
+              _vm._v("Chi Siamo")
             ])
-          ]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Blog")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Chi Siamo")])])
-        ])
+          ],
+          1
+        )
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
